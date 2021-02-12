@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="magebit" translate="label" sortOrder="999">
+			<label>Magebit</label>
+		</tab>
+		<section id="magebit_instagram" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<label>Instagram Feed</label>
+			<tab>magebit</tab>
+			<resource>Magebit_InstagramFeed::config_magebit_instagramfeed</resource>
+			<group id="feed" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>Settings</label>
+				<field id="profile_id" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Instagram profile ID</label>
+				</field>
+				<field id="query_id" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>GQL Query ID</label>
+					<comment>Do not change unless you know what you're doing</comment>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

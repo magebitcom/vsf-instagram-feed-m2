@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Magebit\InstagramFeed\Api\PostsManagementInterface" type="Magebit\InstagramFeed\Model\PostsManagement"/>
+	<type name="Magento\Framework\Console\CommandList">
+		<arguments>
+			<argument name="commands" xsi:type="array">
+				<item name="Fetch" xsi:type="object">Magebit\InstagramFeed\Console\Command\Fetch</item>
+			</argument>
+		</arguments>
+	</type>
+	<preference for="Magebit\InstagramFeed\Api\PostRepositoryInterface" type="Magebit\InstagramFeed\Model\PostRepository"/>
+	<preference for="Magebit\InstagramFeed\Api\Data\PostInterface" type="Magebit\InstagramFeed\Model\Data\Post"/>
+	<preference for="Magebit\InstagramFeed\Api\Data\PostSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+
+	<type name="Magebit\InstagramFeed\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="Magebit\InstagramFeed\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">instagramfeed</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Magebit\InstagramFeed\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

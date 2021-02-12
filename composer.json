@@ -1,0 +1,22 @@
+{
+    "name": "magebit/vsf-instagram-feed",
+    "description": "Magento module for VSF Instagram Feed",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Magebit",
+            "email": "info@magebit.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Magebit\\InstagramFeed\\": ""
+        }
+    }
+}
