@@ -1,5 +1,5 @@
 <p align="left">
-    <a href="https://github.com/magebitcom/vsf-instagram-feed"><img src="https://img.shields.io/github/v/tag/magebitcom/vsf-instagram-feed" /></a>
+    <a href="https://github.com/magebitcom/m2-instagram-feed"><img src="https://img.shields.io/github/v/tag/magebitcom/m2-instagram-feed" /></a>
     <a href="https://packagist.org/packages/magebit/vsf-instagram-feed"><img src="https://img.shields.io/packagist/v/magebit/vsf-instagram-feed" /></a>
 </p>
 
