@@ -2,9 +2,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
 	<default>
 		<magebit_instagram>
-			<feed>
-				<query_id>17888483320059182</query_id>
-			</feed>
+			<settings>
+				<user_id>me</user_id>
+				<callback_url>magebit_instagram/auth</callback_url>
+			</settings>
 		</magebit_instagram>
 	</default>
 </config>

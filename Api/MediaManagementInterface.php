@@ -14,24 +14,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Magebit\InstagramFeed\Api\Data;
 
-/**
- * @package Magebit\InstagramFeed\Api\Data
- */
-interface PostSearchResultsInterface extends \Magento\Framework\Api\SearchResultsInterface
+namespace Magebit\InstagramFeed\Api;
+
+interface MediaManagementInterface
 {
 
     /**
-     * Get Post list.
-     * @return \Magebit\InstagramFeed\Api\Data\PostInterface[]
+     * GET for Media api
+     * @return string
      */
-    public function getItems();
-
-    /**
-     * Set media list.
-     * @param \Magebit\InstagramFeed\Api\Data\PostInterface[] $items
-     * @return $this
-     */
-    public function setItems(array $items);
+    public function getMedia();
 }

@@ -14,20 +14,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Magebit\InstagramFeed\Model\ResourceModel;
+namespace Magebit\InstagramFeed\Block\Auth;
 
 /**
- * @package Magebit\InstagramFeed\Model\ResourceModel
+ * @package Magebit\InstagramFeed\Block\Auth
  */
-class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Index extends \Magento\Framework\View\Element\Template
 {
+
     /**
-     * Define resource model
+     * Constructor
      *
-     * @return void
+     * @param \Magento\Framework\View\Element\Template\Context  $context
+     * @param array $data
      */
-    protected function _construct()
-    {
-        $this->_init('magebit_instagramfeed_post', 'post_id');
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
+        array $data = []
+    ) {
+        parent::__construct($context, $data);
     }
 }

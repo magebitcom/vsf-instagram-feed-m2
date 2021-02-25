@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+	<router id="standard">
+		<route id="magebit_instagram" frontName="magebit_instagram">
+			<module name="Magebit_InstagramFeed"/>
+		</route>
+	</router>
+</config>

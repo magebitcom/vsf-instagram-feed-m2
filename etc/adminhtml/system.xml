@@ -8,14 +8,30 @@
 			<label>Instagram Feed</label>
 			<tab>magebit</tab>
 			<resource>Magebit_InstagramFeed::config_magebit_instagramfeed</resource>
-			<group id="feed" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+
+			<group id="settings" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 				<label>Settings</label>
-				<field id="profile_id" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
-					<label>Instagram profile ID</label>
+				<field id="user_id" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Instagram User ID</label>
+					<comment>me or {user-id}</comment>
 				</field>
-				<field id="query_id" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
-					<label>GQL Query ID</label>
-					<comment>Do not change unless you know what you're doing</comment>
+				<field id="app_id" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>App ID</label>
+					<comment>App Dashboard > Products > Instagram > Basic Display > Instagram App ID</comment>
+				</field>
+				<field id="app_secret" type="text" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>App Secret</label>
+					<comment>App Dashboard > Products > Instagram > Basic Display > Instagram App Secret</comment>
+				</field>
+				<field id="callback_url" type="text" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>oAuth callback url</label>
+					<comment>Default: magebit_instagram/auth</comment>
+				</field>
+				<field id="auth_token" type="text" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Auth token</label>
+					<frontend_model>Magebit\InstagramFeed\Block\System\Config\AuthToken</frontend_model>
+				</field>
+				<field id="token_expiry" type="hidden" sortOrder="60" showInWebsite="0" showInStore="0" showInDefault="0">
 				</field>
 			</group>
 		</section>

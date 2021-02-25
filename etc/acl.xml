@@ -6,7 +6,7 @@
 				<resource id="Magento_Backend::stores">
 					<resource id="Magento_Backend::stores_settings">
 						<resource id="Magento_Config::config">
-							<resource id="Magebit_InstagramFeed::config_magebit_instagramfeed" title="instagram_feed"/>
+							<resource id="Magebit_InstagramFeed::config_magebit_instagramfeed" title="magebit_instagram"/>
 						</resource>
 					</resource>
 				</resource>

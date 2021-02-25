@@ -1,0 +1,64 @@
+<?php declare(strict_types=1);
+/**
+ * This file is part of the Magebit_InstagramFeed package
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magebit_InstagramFeed
+ * to newer versions in the future.
+ *
+ * @copyright Copyright (c) 2021 Magebit (https://magebit.com/)
+ * @author    Kristofers Ozolins <info@magebit.com>
+ * @license   GNU General Public License ("GPL") v3.0
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/** @var \Magebit\InstagramFeed\Block\System\Config\AuthToken $block */
+?>
+
+<script>
+    require([
+        'jquery',
+        'prototype'
+    ], function(jQuery){
+        jQuery('#ig_auth_token').click(function () {
+            var win = window.open("<?= $block->getAuthUrl() ?>", '_blank')
+
+            var timer = setInterval(function() { 
+                if(win.closed) {
+                    clearInterval(timer)
+                    window.location.reload()
+                }
+            }, 1000)
+
+            win.focus()
+        });
+
+    });
+</script>
+
+<?php if ($block->getAuthToken()): ?>
+    <?php if ($block->isExpired()): ?>
+    <div style="padding: 10px; margin-top: 10px; margin-bottom: 10px; background-color: indianred;">
+        <?= __('Auth token expired') ?>
+    </div>
+    <?php else: ?>
+    <div style="padding: 10px; margin-top: 10px; margin-bottom: 10px; background-color: aquamarine;">
+    <?= __('Auth token set. Expires in') ?> <?= $block->getExpiryDate(); ?>
+    </div>
+    <?php endif;?>
+<?php else: ?>
+    <div style="padding: 10px; margin-top: 10px; margin-bottom: 10px; background-color: indianred;">
+        <?= __('Auth token not set') ?>
+    </div>
+<?php endif;?>
+
+<?php if ($block->hasRequiredFields()): ?>
+    <?= $block->getButtonHtml(); ?>
+<?php else: ?>
+    <div style="padding: 10px; margin-bottom: 10px;">
+    <?= __('Please set App ID and App Secret before fetching token') ?>
+    </div>
+<?php endif;?>

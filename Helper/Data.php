@@ -14,45 +14,167 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Magebit\InstagramFeed\Helper;
 
-use Magento\Framework\App\Filesystem\DirectoryList;
+use LogicException;
+use BadMethodCallException;
+use InvalidArgumentException;
+use Magento\Framework\Url;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
-use Magento\Framework\Exception\FileSystemException;
+use Magento\Framework\App\Config\Storage\WriterInterface;
+use RuntimeException;
 
 /**
  * @package Magebit\InstagramFeed\Helper
  */
 class Data extends AbstractHelper
 {
-    const MEDIA_DIR = 'instagramfeed';
+    const INSTAGRAM_AUTH_URL = 'https://api.instagram.com/oauth/authorize';
+    const INSTAGRAM_ACCESS_URL = 'https://api.instagram.com/oauth/access_token';
+    const INSTAGRAM_GRAPH_URL = 'https://graph.instagram.com';
+    const CONFIG_APP_ID = 'magebit_instagram/settings/app_id';
+    const CONFIG_APP_SECRET = 'magebit_instagram/settings/app_secret';
+    const CONFIG_AUTH_TOKEN = 'magebit_instagram/settings/auth_token';
+    const CONFIG_TOKEN_EXPIRY = 'magebit_instagram/settings/token_expiry';
+    const CONFIG_USER_ID = 'magebit_instagram/settings/user_id';
+    const CONFIG_CALLBACK_URL = 'magebit_instagram/settings/callback_url';
 
     /**
-     * @var DirectoryList
+     * @var Url
      */
-    protected $directoryList;
+    protected $urlHelper;
+
+    /**
+     * @var WriterInterface
+     */
+    protected $writer;
 
     /**
      * @param Context $context
-     * @param DirectoryList $curl
+     * @param Url $urlHelper
+     * @param WriterInterface $writer
      * @return void
      */
-    public function __construct(Context $context, DirectoryList $directoryList)
-    {
+    public function __construct(
+        Context $context,
+        Url $urlHelper,
+        WriterInterface $writer
+    ) {
         parent::__construct($context);
-        $this->directoryList = $directoryList;
+        $this->urlHelper = $urlHelper;
+        $this->writer = $writer;
     }
 
     /**
-     * Get directory of saved instagram images
+     * Get app id from config
+     *
+     * @return mixed
+     */
+    public function getAppId()
+    {
+        return $this->scopeConfig->getValue(self::CONFIG_APP_ID);
+    }
+
+    /**
+     * Get app secret from config
+     *
+     * @return mixed
+     */
+    public function getAppSecret()
+    {
+        return $this->scopeConfig->getValue(self::CONFIG_APP_SECRET);
+    }
+
+    /**
+     * Get auth token from config
+     *
+     * @return mixed
+     */
+    public function getAuthToken()
+    {
+        return $this->scopeConfig->getValue(self::CONFIG_AUTH_TOKEN);
+    }
+
+    /**
+     * Get token timestamp from config
+     *
+     * @return mixed
+     */
+    public function getTokenTimestamp()
+    {
+        return $this->scopeConfig->getValue(self::CONFIG_TOKEN_EXPIRY);
+    }
+    
+    /**
+     * Get user id from config
+     *
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        return $this->scopeConfig->getValue(self::CONFIG_USER_ID);
+    }
+
+    /**
+     * Get oauth callback url
      *
      * @return string
-     * @throws FileSystemException
+     * @throws RuntimeException
+     * @throws LogicException
+     * @throws BadMethodCallException
+     * @throws InvalidArgumentException
      */
-    public function getMediaDir()
+    public function getCallbackUrl()
     {
-        return $this->directoryList->getPath(DirectoryList::MEDIA) . DIRECTORY_SEPARATOR . self::MEDIA_DIR . DIRECTORY_SEPARATOR;
+        return $this->urlHelper->getUrl($this->scopeConfig->getValue(self::CONFIG_CALLBACK_URL));
+    }
+
+    /**
+     * Set auth token
+     *
+     * @param mixed $token
+     * @return void
+     */
+    public function setAuthToken($token)
+    {
+        $this->writer->save(self::CONFIG_AUTH_TOKEN, $token);
+    }
+
+    /**
+     * Set expiry timestamp
+     *
+     * @param mixed $timestamp
+     * @return void
+     */
+    public function setExpiryTimestamp($timestamp)
+    {
+        $this->writer->save(self::CONFIG_TOKEN_EXPIRY, $timestamp);
+    }
+
+    /**
+     * Parse data from Facebook's signed request
+     *
+     * @param string $signedRequest
+     * @return mixed
+     */
+    public function parseSignedRequest($signedRequest)
+    {
+        list($encoded_sig, $payload) = explode('.', $signedRequest, 2);
+
+        $secret = $this->getAppSecret();
+
+        // decode the data
+        $sig = base64_decode(strtr($encoded_sig, '-_', '+/'));
+        $data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+        // confirm the signature
+        $expected_sig = hash_hmac('sha256', $payload, $secret, $raw = true);
+        if ($sig !== $expected_sig) {
+            error_log('Bad Signed JSON signature!');
+            return null;
+        }
+
+        return $data;
     }
 }
